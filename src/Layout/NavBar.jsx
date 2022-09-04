@@ -16,7 +16,7 @@ const NavBar = () => {
           <Link to="/create-project">Create Project</Link>
         </li>
         <p>
-          Connect Wallet
+          Connect
         </p>
       </NavBarList>
     </nav>

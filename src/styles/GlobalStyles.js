@@ -7,6 +7,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: 'Lato', sans-serif;
     overflow-x: hidden; 
+    background-color: #d3d8c6;
   }
   body{
     font-size: 62.5%;
