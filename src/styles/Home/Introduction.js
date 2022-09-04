@@ -14,8 +14,8 @@ export const IntroductionStyled = styled.section`
   }
 
   & > h1{
-    font-size: 3.5rem;
-    font-weight: 500;
+    font-size: 4rem;
+    font-weight: bold;
     margin-bottom: 20px;
   }
   

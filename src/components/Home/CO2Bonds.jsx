@@ -15,7 +15,11 @@ const CO2Bonds = () => {
 
           <p>The contribution that each individual, company or organization has regarding climate change is known as carbon footprint. This footprint can be measured by quantifying our main sources of energy consumption, such as transport or electricity.</p>
 
-          <p>By purchasing a Carbon Credit, the emission into the atmosphere of one ton of carbon dioxide (CO2) is avoided</p>
+          <button className='info-container__text--foodprint'>
+            <a href="https://www.footprintcalculator.org/home" target={'_blank'} rel="noreferrer">Calculate your Ecological Foodprint</a>
+          </button>
+
+          <p>By purchasing a Green Bond, the emission into the atmosphere of one ton of carbon dioxide (CO2) is avoided</p>
         </div>
       </div>
 
