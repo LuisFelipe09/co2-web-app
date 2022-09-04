@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
   }
   body{
     font-size: 62.5%;
+    padding: 25px;
     overflow-x: hidden; 
   }
 `
