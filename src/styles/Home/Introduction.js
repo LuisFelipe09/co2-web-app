@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-export const IntroductionSectionStyled = styled.section`
+export const IntroductionStyled = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 35px;
+  margin: 35px 0 250px 0;
 
   & > img{
     width: 300px;

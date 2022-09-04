@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { NavBarList } from '../styles/LayOut/NavBar'
+import { NavBarList, NavStyled } from '../styles/Layout/NavBar'
 
 const NavBar = () => {
   return (
-    <nav>
+    <NavStyled>
       <NavBarList>
         <li>
           <Link to="/">Home</Link>
@@ -19,7 +19,7 @@ const NavBar = () => {
           Connect
         </p>
       </NavBarList>
-    </nav>
+    </NavStyled>
   )
 }
 
