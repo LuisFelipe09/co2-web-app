@@ -6,9 +6,9 @@ const GoToProjects = () => {
   return (
     <GoToProjectsSectionStyled>
     <h2>Start</h2>
-    <button className='link-button'>
-      <Link to={'/projects'}>Go to Projects</Link>
-    </button>
+      <Link to={'/projects'}>
+        <button className='link-button'>Go to Projects</button>
+      </Link>
     </GoToProjectsSectionStyled>
   )
 }

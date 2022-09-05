@@ -5,18 +5,18 @@ export const GoToProjectsSectionStyled = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 100px;
+  align-items: center;
 
   & > h2{
     font-size: 2.5rem;
     margin: 0 auto;
   }
 
-  & > .link-button{
+  & .link-button{
     width: 300px;
     border-radius: 10px; 
     height: 75px;
     background-color: #71c571;
-    margin: 0 auto;
     margin-top: 30px;
     font-size: 1.6rem;
     border: none;

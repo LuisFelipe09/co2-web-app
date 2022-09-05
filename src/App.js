@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { GlobalStyles } from './styles/GlobalStyles'
 import CreateProject from './views/CreateProject'
 import Home from './views/home'
-import ProjectList from './views/ProjectsList'
+import Projects from './views/Projects'
 
 function App () {
   return (
@@ -11,7 +11,7 @@ function App () {
       <GlobalStyles/>
       <Routes>
         <Route path="/" exact element={<Home/>} />
-        <Route path="/projects" exact element={<ProjectList/>} />
+        <Route path="/projects" exact element={<Projects/>} />
         <Route path="/create-project" exact element={<CreateProject/>} />
       </Routes>
     </>
