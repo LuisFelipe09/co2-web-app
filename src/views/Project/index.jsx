@@ -1,11 +1,14 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import ProjectItemInfo from '../../components/Project/ProjectItemInfo'
+import { Main } from '../../styles/GeneralStyles'
 
 const Project = () => {
   const params = useParams()
-  console.log(params)
   return (
-    <div>Project {params.tokenId}</div>
+    <Main>
+      <ProjectItemInfo tokenId={params.tokenId}/>
+    </Main>
   )
 }
 
