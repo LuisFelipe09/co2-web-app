@@ -1,11 +1,12 @@
 import React from 'react'
+import { TextFieldContainer } from '../../styles/Project/TextField'
 
 const TextField = ({ title, text }) => {
   return (
-    <div>
+    <TextFieldContainer>
       <strong>{title}</strong>
       <p>{text}</p>
-    </div>
+    </TextFieldContainer>
   )
 }
 

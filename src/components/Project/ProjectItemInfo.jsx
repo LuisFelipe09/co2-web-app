@@ -1,4 +1,5 @@
 import React from 'react'
+import { ProjectItemInfoContainer } from '../../styles/Project/ProjectItemInfo'
 import TableInfo from './TableInfo'
 import TextField from './TextField'
 
@@ -14,16 +15,19 @@ const mockTableData2 = {
 
 const ProjectItemInfo = ({ tokenId }) => {
   return (
-    <div>
+    <ProjectItemInfoContainer>
       <div className='titles'>
         <img className='titles-img' src="https://cdn-icons-png.flaticon.com/512/6298/6298900.png" alt="NFT-image" />
         <h1 className='titles-title'>Carbono Agroporvanda</h1>
-        <button className='titles-back'>Volver</button>
+        <button className='titles-button'>
+          <img className='titles-button__button' src="https://cdn-icons-png.flaticon.com/512/5968/5968321.png" alt="" />
+          Support this Project
+        </button>
       </div>
 
       <section className='info'>
         <div className='info-address'>
-          <img className='info-address-img' src="" alt="map img" />
+          <img className='info-address-img' src="https://i.imgur.com/eoKR42Z.png" alt="map img" />
         </div>
 
         <div className='info-fields'>
@@ -39,12 +43,15 @@ const ProjectItemInfo = ({ tokenId }) => {
 
           <TableInfo title='Ubicación' rowTitles={mockTableData.titles} rowText={mockTableData.text} />
           <TableInfo title={''} rowTitles={mockTableData2.titles} rowText={mockTableData2.text} />
+        </div>
 
+        <div className='info-description'>
           <h2>Project Description</h2>
           <p>Descripción</p>
+
         </div>
       </section>
-    </div>
+    </ProjectItemInfoContainer>
   )
 }
 
