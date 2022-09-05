@@ -6,6 +6,7 @@ export const ProjectItemContainer = styled.div`
   margin: 0 auto 50px auto;
   align-items: center;
   gap: 25px;
+  cursor: pointer;
 
   & > .project-item__img{
     width: 250px;
