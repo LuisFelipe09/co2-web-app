@@ -1,8 +1,20 @@
 import styled from 'styled-components'
 
+import { Link } from 'react-router-dom'
+
+export const Container = styled.div`
+  width: 50%;
+  margin: 0 auto;
+`
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
+  width: 100%;
+`
+
 export const ProjectItemContainer = styled.div`
   display: flex;
-  width: 75%;
   margin: 0 auto 50px auto;
   align-items: center;
   gap: 25px;

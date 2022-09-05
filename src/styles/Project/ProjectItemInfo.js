@@ -3,8 +3,7 @@ import styled from 'styled-components'
 export const ProjectItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
-  height: 100%;
+  width: 75%;
   margin: 0 auto;
 
   & > .titles{

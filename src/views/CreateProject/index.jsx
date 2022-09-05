@@ -2,7 +2,9 @@ import React from 'react'
 
 const CreateProject = () => {
   return (
-    <div>CreateProject</div>
+    <section>
+      <h1>Create a new Project</h1>
+    </section>
   )
 }
 
