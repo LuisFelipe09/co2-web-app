@@ -1,10 +1,9 @@
 import React from 'react'
+import CreateNewProject from '../../components/CreateProject'
 
 const CreateProject = () => {
   return (
-    <section>
-      <h1>Create a new Project</h1>
-    </section>
+    <CreateNewProject/>
   )
 }
 
