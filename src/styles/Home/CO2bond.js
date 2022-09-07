@@ -42,7 +42,7 @@ export const CO2Styled = styled.section`
       & > .info-container__text--foodprint{
         font-size: 1.5rem;
         margin: 0 auto;
-        background-color: #71c571;
+        background-color: #0a100d;
         padding: 15px;
         border-radius: 15px;
         text-align: center;
@@ -51,7 +51,7 @@ export const CO2Styled = styled.section`
 
         & > a{
           text-decoration: none;
-          color: #000;
+          color: #fff;
         }
       }
     }

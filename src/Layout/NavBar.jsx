@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { NavBarList, NavStyled } from '../styles/Layout/NavBar'
+import { NavBarList, NavStyled, Wallet } from '../styles/Layout/NavBar'
 
 import { connector } from '../config/web3'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
@@ -42,10 +42,19 @@ const NavBar = () => {
         <li>
           <Link to="/create-project">Create Project</Link>
         </li>
-        <p onClick={connect}>
-          Connect {truncatedAddress} ~{balance} Ξ
-        </p>
       </NavBarList>
+      <Wallet>
+        {active
+          ? (
+          <><p onClick={connect}>
+              {truncatedAddress} ~ {balance} Ξ
+            </p><p onClick={disconnect}>x</p></>
+            )
+          : (
+            <p>{isUnsupportedChain ? 'Red no soportada' : 'Conectar wallet'}</p>
+            )
+        }
+      </Wallet>
     </NavStyled>
   )
 }

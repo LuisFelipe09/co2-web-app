@@ -1,11 +1,17 @@
 import styled from 'styled-components'
 
 export const StyledForm = styled.form`
-  display: flex;
+  display: flex;  
   flex-direction: column;
   gap: 20px;
   width: 60%;
-  margin: 0 auto;
+  height: 80%;
+  position: absolute;
+  margin: auto;
+  top: 10vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
   justify-content: center;
   align-items: center;
   background-color: #71c571;

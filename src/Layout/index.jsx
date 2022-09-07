@@ -1,12 +1,15 @@
 import React from 'react'
 import NavBar from './NavBar'
 
+import { Container } from '../styles/Layout/Layout'
+
 const Layout = ({ children }) => {
   return (
     <>
       <NavBar/>
-      <div style={{ height: '80px', backgroundColor: '#d3d8c6' }} />
-      {children}
+      <Container>
+        {children}
+      </Container>
     </>
   )
 }
