@@ -42,5 +42,6 @@ export const Wallet = styled.div`
   & > p{    
     font-size: 1.6rem;
     width: auto;
+    cursor: pointer;
   }
 `

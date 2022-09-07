@@ -46,12 +46,12 @@ const NavBar = () => {
       <Wallet>
         {active
           ? (
-          <><p onClick={connect}>
+          <><p>
               {truncatedAddress} ~ {balance} Ξ
             </p><p onClick={disconnect}>x</p></>
             )
           : (
-            <p>{isUnsupportedChain ? 'Red no soportada' : 'Conectar wallet'}</p>
+            <p onClick={connect}>{isUnsupportedChain ? 'Red no soportada' : 'Conectar wallet'}</p>
             )
         }
       </Wallet>
