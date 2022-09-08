@@ -5,8 +5,14 @@ import CreateProject from './views/CreateProject'
 import Home from './views/home'
 import Project from './views/Project'
 import Projects from './views/Projects'
+import Web3 from 'web3'
 
 function App () {
+  if (window.ethereum) {
+    window.web3 = new Web3(window.ethereum)
+    window.ethereum.enable()
+  }
+
   return (
     <>
       <GlobalStyles/>
