@@ -4,7 +4,7 @@ import { Container, ProjectItemContainer, StyledLink } from '../../styles/Projec
 const ProjectItem = () => {
   return (
     <Container>
-      <StyledLink to="1">
+      <StyledLink href="1">
         <ProjectItemContainer className='project-item'>
           <img className='project-item__img' src="https://cdn-icons-png.flaticon.com/512/6298/6298900.png" alt="NFT-image" />
           <div className='project-item__text'>

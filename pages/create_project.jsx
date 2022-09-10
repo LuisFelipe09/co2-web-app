@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateNewProject from '../../components/CreateProject'
+import CreateNewProject from '../src/components/CreateProject'
 
 const CreateProject = () => {
   return (

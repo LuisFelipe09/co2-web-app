@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
+import Linked from 'next/link'
 
 export const Container = styled.div`
   width: 50%;
   margin: 0 auto;
 `
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled(Linked)`
   text-decoration: none;
   color: #000;
   width: 100%;

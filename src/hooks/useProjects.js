@@ -9,32 +9,36 @@ const useProjects = () => {
   const greenTokens = useGreenTokens()
   const [projects, setProjects] = useState([])
   const [projectsInstances, setProjectsInstances] = useState([])
-  const { active, library, chainId } = useWeb3React()
+  const { active, library, account, chainId } = useWeb3React()
   const [projectsUserInteract, setProjectsUserInteract] = useState([])
 
   const getProjects = useCallback(async () => {
-    const projectsPromises = []
-    const projectsInstancesPromises = []
-    const limit = await greenTokens.methods._projectIdCounter().call()
-    // c < limit porque el limit siempre va uno por delante
-    for (let c = 0; c < limit; c++) {
-      const projectRes = await greenTokens.methods.project(c)
-      const projectContract = new library.eth.Contract(abi, projectRes.tokens)
+    if (greenTokens) {
+      const projectsPromises = []
+      const projectsInstancesPromises = []
+      const limit = await greenTokens.methods._projectIdCounter().call()
+      // c < limit porque el limit siempre va uno por delante
+      for (let c = 0; c < limit; c++) {
+        const projectRes = await greenTokens.methods.project(c).call()
+        const projectContract = new library.eth.Contract(abi, projectRes.tokens)
 
-      projectsPromises.push(projectRes)
-      projectsInstancesPromises.push(projectContract)
+        projectsPromises.push(projectRes)
+        projectsInstancesPromises.push(projectContract)
+      }
+
+      setProjects(projectsPromises)
+      setProjectsInstances(projectsInstancesPromises)
     }
-
-    console.log(projectsPromises)
-    console.log(projectsInstancesPromises)
-
-    setProjects(projectsPromises)
-    setProjectsInstances(projectsInstancesPromises)
-  }, [projects])
+  }, [greenTokens])
 
   const createProject = async ({ _projectName, _tokenSupply, urlJsonMetadata }) => {
-    const response = greenTokens.methods.createProject(_projectName, _tokenSupply, urlJsonMetadata).call()
-    console.log(response)
+    if (greenTokens) {
+      const response = await greenTokens.methods.createProject(_projectName, _tokenSupply, urlJsonMetadata)
+        .send({ from: account })
+        .on('error', () => {
+          console.log('error')
+        })
+    }
   }
 
   const getProjectsWhereUserInteract = async ({ userAddress }) => {
@@ -51,16 +55,14 @@ const useProjects = () => {
         })
       }
     }
-    console.log('getProjectsWhereUserInteract')
-    console.log(projectsUserInteract)
     setProjectsUserInteract(projectUser)
   }
 
   useEffect(() => {
     getProjects()
-  }, [getProjects])
+  }, [getProjects, greenTokens])
 
-  return { projects, getProjects, createProject, getProjectsWhereUserInteract }
+  return { projects, getProjects, projectsInstances, createProject, getProjectsWhereUserInteract }
 }
 
 export default useProjects

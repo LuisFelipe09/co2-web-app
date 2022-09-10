@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { NavBarList, NavStyled, Wallet } from '../styles/Layout/NavBar'
 
 import { connector } from '../config/web3'
@@ -34,13 +34,13 @@ const NavBar = () => {
     <NavStyled>
       <NavBarList>
         <li>
-          <Link to="/">Home</Link>
+          <Link href="/">Home</Link>
         </li>
         <li>
-          <Link to="/projects">Projects</Link>
+          <Link href="/projects">Projects</Link>
         </li>
         <li>
-          <Link to="/create-project">Create Project</Link>
+          <Link href="/create_project">Create Project</Link>
         </li>
       </NavBarList>
       <Wallet>

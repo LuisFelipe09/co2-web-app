@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import { GoToProjectsSectionStyled } from '../../styles/Home/GoToProjects'
 
 const GoToProjects = () => {
   return (
     <GoToProjectsSectionStyled>
     <h2>Start</h2>
-      <Link to={'/projects'}>
+      <Link href='/projects'>
         <button className='link-button'>Go to Projects</button>
       </Link>
     </GoToProjectsSectionStyled>

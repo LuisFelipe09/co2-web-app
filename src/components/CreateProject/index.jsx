@@ -1,11 +1,13 @@
 import { useFormik } from 'formik'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { StyledForm } from '../../styles/CreateProject/CreateNewProject'
 
 import { create } from 'ipfs-http-client'
+import useProjects from '../../hooks/useProjects'
 
-const { REACT_APP_PROJECT_ID, REACT_APP_PROJECT_SECRET } = process.env
-const authorization = 'Basic ' + btoa(REACT_APP_PROJECT_ID + ':' + REACT_APP_PROJECT_SECRET)
+import json from '../../hooks/data.json'
+
+const authorization = 'Basic ' + btoa(process.env.PROJECT_ID + ':' + process.env.PROJECT_SECRET)
 
 const client = create({
   url: 'https://ipfs.infura.io:5001/api/v0',
@@ -16,22 +18,47 @@ const client = create({
 
 const CreateNewProject = () => {
   const [certified, setCertified] = useState()
+  const { createProject } = useProjects()
 
   const formik = useFormik({
     initialValues: {
-      projectName: '',
-      projectSupply: '',
-      url: ''
+      _projectName: '',
+      _tokenSupply: '',
+      urlJsonMetadata: ''
     },
     onSubmit: async (values) => {
       const added = await client.add(certified)
       const url = `https://infura-ipfs.io/ipfs/${added.path}`
       const objJsonStr = JSON.stringify({ ...values, image: url })
       const objJsonB64 = Buffer.from(objJsonStr).toString('base64')
-      console.log('data:application/json;base64,' + objJsonB64)
-      console.log(certified)
+      const res = await createProject({
+        _projectName: values._projectName,
+        _tokenSupply: values._tokenSupply,
+        urlJsonMetadata: 'data:application/json;base64,' + objJsonB64
+      })
+      // loadJson()
     }
   })
+
+  useEffect(() => {
+    // loadJson()
+  }, [])
+
+  const loadJson = async () => {
+    json.data.map(async (elem, index) => {
+      console.log(index)
+      const jselem = elem
+      jselem.approved_credits = jselem.approved_credits.replace('.', '').replace('.', '')
+      const url = 'https://infura-ipfs.io/ipfs/QmY7QQERBMcCgjmaYkptiBh5164es43aNpLgHTQXU2ZrPj'
+      const objJsonStr = JSON.stringify({ ...jselem, image: url })
+      const objJsonB64 = Buffer.from(objJsonStr).toString('base64')
+      const res = await createProject({
+        _projectName: jselem.title,
+        _tokenSupply: jselem.approved_credits,
+        urlJsonMetadata: 'data:application/json;base64,' + objJsonB64
+      })
+    })
+  }
 
   const hiddenFileInput = useRef(null)
   const handleClick = e => {
