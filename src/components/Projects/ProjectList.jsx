@@ -1,13 +1,12 @@
 import React from 'react'
 import ProjectItem from './ProjectItem'
 
-const ProjectList = () => {
+const ProjectList = ({ projects }) => {
   return (
     <>
-      <ProjectItem/>
-      <ProjectItem/>
-      <ProjectItem/>
-      <ProjectItem/>
+      {projects.map((project, index) => (
+        <ProjectItem project={project} key={index}/>
+      ))}
     </>
   )
 }

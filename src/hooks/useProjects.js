@@ -8,61 +8,75 @@ const { abi } = BaseTokenArtifacts
 const useProjects = () => {
   const greenTokens = useGreenTokens()
   const [projects, setProjects] = useState([])
-  const [projectsInstances, setProjectsInstances] = useState([])
   const { active, library, account, chainId } = useWeb3React()
-  const [projectsUserInteract, setProjectsUserInteract] = useState([])
 
+  // Señala si hay algun proceso ejecutandose
+  const [loading, setLoading] = useState(false)
+
+  // "Serializa las urls de los proyectos a su metada"
+  const getProject = async (projectAddress) => {
+    const projectContract = new library.eth.Contract(abi, projectAddress.tokens)
+    const uriToFetch = await projectContract.methods.uri(0).call()
+    const responseMetaData = await fetch(
+      uriToFetch.includes('data:application/json;base64,') ? uriToFetch : 'data:application/json;base64,' + uriToFetch
+    )
+    let metadata = await responseMetaData.json()
+    let tokens = 0
+    let NFTs = 0
+
+    if (active && account.length > 0) {
+      NFTs = await projectContract.methods.balanceOf(account, 0).call()
+      tokens = await projectContract.methods.balanceOf(account, 1).call()
+    }
+
+    metadata = {
+      ...metadata,
+      // Si tienes tokens del projecto
+      creator: projectAddress.creator,
+      tokens,
+      NFTs
+    }
+
+    return metadata
+  }
+
+  // Obtiene todos los proyectos y su metadata, así también como el saldo
+  // del account con respecto al proyecto
   const getProjects = useCallback(async () => {
     if (greenTokens) {
-      const projectsPromises = []
+      setLoading(true)
       const projectsInstancesPromises = []
       const limit = await greenTokens.methods._projectIdCounter().call()
       // c < limit porque el limit siempre va uno por delante
       for (let c = 0; c < limit; c++) {
         const projectRes = await greenTokens.methods.project(c).call()
-        const projectContract = new library.eth.Contract(abi, projectRes.tokens)
+        const projectMetadata = await getProject(projectRes)
 
-        projectsPromises.push(projectRes)
-        projectsInstancesPromises.push(projectContract)
+        projectsInstancesPromises.push(projectMetadata)
       }
 
-      setProjects(projectsPromises)
-      setProjectsInstances(projectsInstancesPromises)
+      setProjects(projectsInstancesPromises)
+      setLoading(false)
     }
   }, [greenTokens])
 
   const createProject = async ({ _projectName, _tokenSupply, urlJsonMetadata }) => {
     if (greenTokens) {
+      setLoading(true)
       const response = await greenTokens.methods.createProject(_projectName, _tokenSupply, urlJsonMetadata)
         .send({ from: account })
         .on('error', () => {
           console.log('error')
         })
+      setLoading(false)
     }
-  }
-
-  const getProjectsWhereUserInteract = async ({ userAddress }) => {
-    const projectUser = []
-
-    for (let contract = 0; contract < projectsInstances.length; contract++) {
-      const NFT = await projectsInstances[contract].methods.balanceOf(userAddress, 0)
-      const Token = await projectsInstances[contract].methods.balanceOf(userAddress, 1)
-
-      if (NFT !== 0 || Token !== 0) {
-        projectUser.push({
-          NFT,
-          Tokens: Token
-        })
-      }
-    }
-    setProjectsUserInteract(projectUser)
   }
 
   useEffect(() => {
     getProjects()
   }, [getProjects, greenTokens])
 
-  return { projects, getProjects, projectsInstances, createProject, getProjectsWhereUserInteract }
+  return { projects, getProjects, createProject, loading }
 }
 
 export default useProjects
