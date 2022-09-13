@@ -26,7 +26,7 @@ const ProjectItemInfo = ({ project, transferToken }) => {
 
   useEffect(() => {
     (async () => {
-      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${project.ubication.country}+${project.ubication.department}+${project.ubication.municipality}&key=AIzaSyBjlfjPTasTAjfvEwtdXUMuw9MgZ87krDY`)
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${project.ubication.country}+${project.ubication.department}+${project.ubication.municipality}&key=${process.env.GOOGLE_KEY}`)
         .then(r => r.json())
         .then(data => {
           console.log(data.results[0])
@@ -62,7 +62,7 @@ const ProjectItemInfo = ({ project, transferToken }) => {
         <Section>
           <div className='info-address'>
           <LoadScript
-            googleMapsApiKey="AIzaSyBjlfjPTasTAjfvEwtdXUMuw9MgZ87krDY"
+            googleMapsApiKey={process.env.GOOGLE_KEY}
           >
             <GoogleMap
               mapContainerStyle={{

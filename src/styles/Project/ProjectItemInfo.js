@@ -46,6 +46,7 @@ export const Section = styled.section`
   display: grid;
   grid-template-columns: 25% 45% 25%;
   grid-gap: 2.5%;
+  margin-bottom: 10px;
 
   & > .info-fields{
     display: flex;
