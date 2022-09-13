@@ -18,12 +18,14 @@ const Projects = () => {
   const [projectsSearch, setProjectsSearch] = useState([])
 
   const handleProjects = useCallback(() => {
-    const res = projects.filter(elem => {
-      if (search.length === 0) {
-        return projects
-      }
-      return elem.contains(search)
-    })
+    let res = []
+    if (search.length === 0) {
+      res = [...projects]
+    } else {
+      res = projects.filter(elem => {
+        return elem.title.contains(search)
+      })
+    }
     setProjectsSearch(res)
   }, [search, projects])
 
@@ -39,7 +41,7 @@ const Projects = () => {
     <Main>
       <Container>
         <Introduction value={search} onChange={e => handleInput(e)}/>
-        <ProjectList projects={projects}/>
+        <ProjectList projects={projectsSearch}/>
       </Container>
     </Main>
   )

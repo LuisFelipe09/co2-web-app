@@ -25,7 +25,7 @@ const Projects = () => {
         <ProjectsContainer>
             <h2>Projects we believe in</h2>
             <ProjectsGrid>
-                {projects.map((elem, key) => (
+                {[...projects].slice(0, 6).map((elem, key) => (
                   <Link href={`/project/${key}`} key={key}>
                     <ProjectStructure project={elem}/>
                   </Link>

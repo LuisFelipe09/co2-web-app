@@ -8,13 +8,14 @@ const { abi } = BaseTokenArtifacts
 const useProjects = () => {
   const greenTokens = useGreenTokens()
   const [projects, setProjects] = useState([])
-  const { active, library, account, chainId } = useWeb3React()
+  const { active, library, account } = useWeb3React()
 
   // Señala si hay algun proceso ejecutandose
   const [loading, setLoading] = useState(false)
 
   // "Serializa las urls de los proyectos a su metada"
-  const getProject = async (projectAddress) => {
+  const getProject = async (projectID) => {
+    const projectAddress = await greenTokens.methods.project(projectID).call()
     const projectContract = new library.eth.Contract(abi, projectAddress.tokens)
     const uriToFetch = await projectContract.methods.uri(0).call()
     const responseMetaData = await fetch(
@@ -33,6 +34,7 @@ const useProjects = () => {
       ...metadata,
       // Si tienes tokens del projecto
       creator: projectAddress.creator,
+      token_id: projectID,
       tokens,
       NFTs
     }
@@ -49,8 +51,7 @@ const useProjects = () => {
       const limit = await greenTokens.methods._projectIdCounter().call()
       // c < limit porque el limit siempre va uno por delante
       for (let c = 0; c < limit; c++) {
-        const projectRes = await greenTokens.methods.project(c).call()
-        const projectMetadata = await getProject(projectRes)
+        const projectMetadata = await getProject(c)
 
         projectsInstancesPromises.push(projectMetadata)
       }

@@ -4,7 +4,7 @@ import { Container, ProjectItemContainer, StyledLink } from '../../styles/Projec
 const ProjectItem = ({ project }) => {
   return (
     <Container>
-      <StyledLink href="1">
+      <StyledLink href={`/project/${project.projectID}`}>
         <ProjectItemContainer className='project-item'>
           <img className='project-item__img' src={project.image} alt="NFT-image" />
           <div className='project-item__text'>
