@@ -8,8 +8,9 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 80%;
-  height: 100vh;
+  height: auto;
   margin: 0 auto;
+  overflow: hidden;
 `
 
 const Projects = () => {
@@ -23,17 +24,20 @@ const Projects = () => {
       res = [...projects]
     } else {
       res = projects.filter(elem => {
-        return elem.title.contains(search)
+        console.log(elem.title, search)
+        return elem.title.toLowerCase().includes(search.toLowerCase())
       })
     }
+    console.log(res)
     setProjectsSearch(res)
   }, [search, projects])
 
   useEffect(() => {
     handleProjects()
-  }, [handleProjects])
+  }, [handleProjects, search])
 
   const handleInput = e => {
+    console.log(e.target.value)
     setSearch(e.target.value)
   }
 

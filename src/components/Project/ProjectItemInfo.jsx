@@ -1,19 +1,53 @@
-import React from 'react'
-import { ProjectItemInfoContainer } from '../../styles/Project/ProjectItemInfo'
+import React, { useState, useEffect } from 'react'
+import { ProjectItemInfoContainer, Section } from '../../styles/Project/ProjectItemInfo'
 import TableInfo from './TableInfo'
 import TextField from './TextField'
 
-const mockTableData = {
-  titles: ['Country', 'State', 'Municipality'],
-  text: ['Colombia', 'Cordoba', 'Planeta Rica']
-}
+import { GoogleMap, LoadScript } from '@react-google-maps/api'
 
-const mockTableData2 = {
-  titles: ['Token Id', 'Green Bonds Issued'],
-  text: ['1', '50']
-}
+const ProjectItemInfo = ({ project, transferToken }) => {
+  const [mockTableData] = useState({
+    titles: ['Country', 'State', 'Municipality'],
+    text: [
+      project.ubication.country,
+      project.ubication.department,
+      project.ubication.municipality
+    ]
+  })
+  const [mockTableData2] = useState({
+    titles: ['Token Id', 'Green Bonds Issued'],
+    text: [project.token_id, project?.approved_credits]
+  })
 
-const ProjectItemInfo = ({ tokenId }) => {
+  const [address, setAddress] = useState('')
+  const [tokenType, setTokenType] = useState('')
+  const [tokenCount, setTokenCount] = useState('')
+  const [coordinates, setCoordinates] = useState({})
+
+  useEffect(() => {
+    (async () => {
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${project.ubication.country}+${project.ubication.department}+${project.ubication.municipality}&key=AIzaSyBjlfjPTasTAjfvEwtdXUMuw9MgZ87krDY`)
+        .then(r => r.json())
+        .then(data => {
+          console.log(data.results[0])
+          setCoordinates({
+            lat: data.results[0].geometry.location.lat,
+            lng: data.results[0].geometry.location.lng
+          })
+        })
+    })()
+  }, [project])
+
+  const sendTokens = () => {
+    console.log('transfering tokens...')
+    console.log({
+      address,
+      tokenType,
+      tokenCount
+    })
+    transferToken(project.token_id, address, tokenType, tokenCount)
+  }
+
   return (
     <ProjectItemInfoContainer>
       <div className='titles'>
@@ -25,32 +59,58 @@ const ProjectItemInfo = ({ tokenId }) => {
         </button>
       </div>
 
-      <section className='info'>
-        <div className='info-address'>
-          <img className='info-address-img' src="https://i.imgur.com/eoKR42Z.png" alt="map img" />
-        </div>
+        <Section>
+          <div className='info-address'>
+          <LoadScript
+            googleMapsApiKey="AIzaSyBjlfjPTasTAjfvEwtdXUMuw9MgZ87krDY"
+          >
+            <GoogleMap
+              mapContainerStyle={{
+                width: '400px',
+                height: '400px'
+              }}
+              center={coordinates}
+              zoom={10}
+            >
+              { /* Child components, such as markers, info windows, etc. */ }
+              <></>
+            </GoogleMap>
+          </LoadScript>
 
-        <div className='info-fields'>
-          <TextField title="ProjectID: " text={tokenId} />
-          <TextField title="Registration date: " text={tokenId} />
-          <TextField title="Accreditation period: " text={tokenId} />
-          <TextField title="Validator: " text={tokenId} />
-          <TextField title="Checker: " text={tokenId} />
-          <TextField title="Project Stage: " text={tokenId} />
-          <TextField title="Sector: " text={tokenId} />
-          <TextField title="Evaluation criteria: " text={tokenId} />
-          <TextField title="Quantification methodology: " text={tokenId} />
+          </div>
 
-          <TableInfo title='Ubicación' rowTitles={mockTableData.titles} rowText={mockTableData.text} />
-          <TableInfo title={''} rowTitles={mockTableData2.titles} rowText={mockTableData2.text} />
-        </div>
+          <div className='info-fields'>
+            <TextField title="ProjectID: " text={project.token_id} />
+            <TextField title="Registration date: " text={project.register_date} />
+            <TextField title="Accreditation period: " text={project.acreditation_date} />
+            <TextField title="Validator: " text={project.validator} />
+            <TextField title="Checker: " text={project.verificator} />
+            <TextField title="Project Stage: " text={project.project_state} />
+            <TextField title="Sector: " text={project.sector} />
+            <TextField title="Evaluation criteria: " text={project.evaluation_criteria} />
+            <TextField title="Quantification methodology: " text={project.quantification_methodology} />
 
-        <div className='info-description'>
-          <h2>Project Description</h2>
-          <p>Descripción</p>
+            <TableInfo title='Ubicación' rowTitles={mockTableData.titles} rowText={mockTableData.text} />
+            <TableInfo title={''} rowTitles={mockTableData2.titles} rowText={mockTableData2.text} />
+          </div>
 
-        </div>
-      </section>
+          <div className='info-description'>
+            <h2>Your balance</h2>
+            <p>Tokens: {project.tokens}</p>
+            <p>NFTs: {project.NFTs}</p>
+
+            <h2>Transfer Bonds</h2>
+            <p>Address</p>
+            <input type="text" value={address} onChange={ e => setAddress(e.target.value) } />
+            <label htmlFor="html">Token</label>
+            <input type="radio" id="html" name="fav_language" value="Token" onClick={() => setTokenType('1')}/>
+            <label htmlFor="html">NFT</label>
+            <input type="radio" id="css" name="fav_language" value="NFT" onClick={() => setTokenType('0')}/>
+            <p>Cantidad</p>
+            <input type="text" value={tokenCount} onChange={ e => setTokenCount(e.target.value) }/>
+            <button onClick={sendTokens}>Send</button>
+          </div>
+        </Section>
     </ProjectItemInfoContainer>
   )
 }

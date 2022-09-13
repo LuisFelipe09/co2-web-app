@@ -8,13 +8,13 @@ const TableInfo = ({ title, rowTitles, rowText }) => {
 
       <div className='table-info titles'>
         {rowTitles.map((rowTitle, index) => (
-          <strong key={rowTitle}>{rowTitle}</strong>
+          <strong key={`${rowTitle}-${index}`}>{rowTitle}</strong>
         ))}
       </div>
 
       <div className='table-info'>
         {rowText.map((text, index) => (
-          <p key={text}>{text}</p>
+          <p key={`${text}-${index}`}>{text}</p>
         ))}
       </div>
   </TableInfoContainer>

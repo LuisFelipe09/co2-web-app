@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const ProjectItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: 80%;
   margin: 0 auto;
 
   & > .titles{
@@ -38,34 +38,42 @@ export const ProjectItemInfoContainer = styled.div`
           width: 75px;
         }
       }
-
-    
-
   }
 
-  & > .info{  
+`
+
+export const Section = styled.section`
+  display: grid;
+  grid-template-columns: 25% 45% 25%;
+  grid-gap: 2.5%;
+
+  & > .info-fields{
     display: flex;
-    gap: 60px;
-  
-    & > .info-fields{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    } 
+    flex-direction: column;
+    gap: 10px;
+  } 
 
-    & > .info-description{
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+  & > .info-description{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
 
-      & > h2{
-        font-size: 1.5rem;
-      }
+    & > h2{
+      font-size: 1.5rem;
+    }
 
-      & > p{
-        font-size: 1rem;
-      }
-    } 
-  }
+    & > p{
+      font-size: 1rem;
+    }
 
+    & > input{
+      font-size: 1rem;
+    }
+
+    & > label{
+      font-size: 1rem;
+    }    
+  } 
+}
 `
